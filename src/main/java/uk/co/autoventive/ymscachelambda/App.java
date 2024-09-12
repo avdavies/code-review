@@ -28,14 +28,11 @@ public class App implements RequestStreamHandler {
 
     @Override
     public void handleRequest(InputStream inputStream, OutputStream outputStream, Context context) {
-        log.info("Running Lambda");
         // Get GeoFences from YMS
         try {
             log.info("Collecting Geofences");
             List<GeoFence> geoFences = geoFenceDao.getGeoFences();
-            log.info("Collected {} Geofences", geoFences.toString());
 
-            log.info("Updating Cache");
             cacheService.updateCache(geoFences);
             log.info("Cache updated");
         } catch (MissingEnviromentVariableException e) {
